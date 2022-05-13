@@ -1,0 +1,20 @@
+May 13th 2022:
+
+Class added.
+
+TimeChart is the core object of the application, representing a 7-day week in which days are divided
+in 24-hour segments. Each of these segments may contain a pointer to a set of Courses representing
+which courses have a session in that particular hour. TimeChart also contains a set of students
+representing all students on which we have enrollment data.
+
+Setters: setCourseAtWindow(Course course, TimeWindow time_window)
+
+Getters: getCoursesAtWindow(TimeWindow time_window), getStudents()
+
+Constructor: TimeChart(set<Student> students)
+
+Methods:
+swapCourses(Course first_course, TimeWindow first_window, 
+    Course second_course, TimeWindow second_window) swaps the two pairs in the chart.
+findConflicts(std::set<Student> students, TimeWindow time_window) finds all conflicts in a given TimeWindow.
+

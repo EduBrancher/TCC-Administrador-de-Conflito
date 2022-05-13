@@ -1,0 +1,19 @@
+May 13th 2022:
+
+Class added.
+
+TimeWindow is a class used to represent a period of time on some weekday. It is also to be used
+as a wrapper for the C++ std::chrono header.
+
+Setters: None.
+
+Getters: getStartingHour, getEndingHour, getWeekday
+
+Constructor: TimeWindow(int starting_hour, int ending_hour, std::chrono::weekday weekday)
+
+Methods added:
+
+method getDuration(): returns a duration (essentially, end time - start time) for some time window.
+The method returns a new TimeWindow. The TimeWindow object where the method is called is unchanged.
+
+method toString(): Transforms a TimeWindow into human-readable datetime content.
