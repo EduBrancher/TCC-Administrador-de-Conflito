@@ -1,1 +1,12 @@
+May 13th 2022:
+Class added.
 
+Student represents a student in our application domain. Each student
+will have a set of courses in which they intend to enroll. Students also
+have ids. The set of desired courses is to be obtained from outside data.
+
+Setters: None.
+
+Getters: getCourses, getId
+
+Constructor: Student(ll id, std::set<Course> desired_courses)

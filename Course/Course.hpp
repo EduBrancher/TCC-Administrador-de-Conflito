@@ -19,6 +19,8 @@ public:
     std::vector<TimeWindow> getTimes();
     std::string getName();
     int getId();
+    void addTimeWindow(TimeWindow time_window);
+    void removeTimeWindow(TimeWindow time_window);
 };
 
 

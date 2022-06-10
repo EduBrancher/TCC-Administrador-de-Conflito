@@ -1,0 +1,15 @@
+May 13th 2022:
+Class added.
+
+Course represents a particular class that will be given in this semester.
+A course therefore has a name and id, and a set of TimeWindow that represents
+when these classes will occur. Since TimeWindow contains both time and weekday,
+this is sufficient to determine when all classes will occur.
+
+Setters: None
+
+Getters: getName, getId, getTimes
+
+Constructor: Course(std::vector<TimeWindow> time_windows, std::string name, int id)
+
+Methods: addTimeWindow(TimeWindow time_window), removeTimeWindow(TimeWindow time_window)

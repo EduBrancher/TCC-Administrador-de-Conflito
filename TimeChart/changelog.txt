@@ -3,7 +3,7 @@ May 13th 2022:
 Class added.
 
 TimeChart is the core object of the application, representing a 7-day week in which days are divided
-in 24-hour segments. Each of these segments may contain a pointer to a set of Courses representing
+in 24-hour segments. Each of these segments may contain a set of Courses representing
 which courses have a session in that particular hour. TimeChart also contains a set of students
 representing all students on which we have enrollment data.
 
