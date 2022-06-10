@@ -7,15 +7,15 @@ TimeChart timeChart(students);
 
 TimeChart::TimeChart(set<Student> students){
     this->students = students;
-}
-
-set<Student> TimeChart::getStudents(){
-    return this->students;
     for (int i = 0; i < 7; i++){
         for (int j = 0; j < 24; j++){
             this->chart[i][j] = set<Course>();
         }
     }
+}
+
+set<Student> TimeChart::getStudents(){
+    return this->students;
 }
 
 void TimeChart::setCourseAtWindow(Course course, TimeWindow timeWindow){
