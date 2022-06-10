@@ -17,3 +17,7 @@ method getDuration(): returns a duration (essentially, end time - start time) fo
 The method returns a new TimeWindow. The TimeWindow object where the method is called is unchanged.
 
 method toString(): Transforms a TimeWindow into human-readable datetime content.
+
+Jun 10th 2022:
+Adds a map to pair weekdays with their index. Changes types of weekday related functions to deal
+with ints and strings.

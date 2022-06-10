@@ -11,7 +11,7 @@
 class TimeChart {
 
 private:
-    std::set<Course> timechart[24][7];
+    std::set<Course> chart[7][24];
     std::set<Student> students;
 public:
     TimeChart(std::set<Student> students);
