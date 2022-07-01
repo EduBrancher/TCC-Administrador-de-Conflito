@@ -66,3 +66,30 @@ void TimeChart::swapCourses(Course firstCourse, TimeWindow firstWindow,
         
 
     }
+//for a given time window, check how many students have conflicts by being 
+//alumni of a pair of disciplines that are taught in that window.
+int TimeChart::findConflicts(std::set<Student> students, TimeWindow timeWindow){
+    int conflicts = 0;
+
+    for (auto student : students){
+        std::set<TimeWindow, TWComparator> studentWindows;
+        std::set<Course> studentCourses = student.getCourses();
+
+        for (auto course : studentCourses){
+            std::set<TimeWindow, TWComparator> courseWindows = course.getTimes();
+
+            for (auto window : courseWindows){
+                std::set<TimeWindow, TWComparator>::iterator it = studentWindows.find(window);
+
+                if (it != studentWindows.end()){ //TimeWindow is already present in the set
+                    conflicts++;
+                    break;
+                }
+                else{
+                    studentWindows.insert(window); //add this window to set if not there
+                } 
+            }
+        }
+    }
+    return conflicts;
+}

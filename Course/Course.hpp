@@ -12,11 +12,11 @@ class Course {
 private:
     ll id;
     std::string name;
-    std::vector<TimeWindow> time_windows;
+    std::set<TimeWindow, TWComparator> time_windows;
 
 public:
-    Course(std::vector<TimeWindow> time_windows, std::string name, int id);
-    std::vector<TimeWindow> getTimes();
+    Course(std::set<TimeWindow> time_windows, std::string name, int id);
+    std::set<TimeWindow, TWComparator> getTimes();
     std::string getName();
     int getId();
     void addTimeWindow(TimeWindow time_window);

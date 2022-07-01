@@ -19,15 +19,28 @@ private:
     int start_hour;
     int end_hour;
     int week_day;
+    ll id;
     
 public:
-    TimeWindow(int start_hour, int end_hour, string weekday);
-    int getStartingHour();
-    int getEndingHour();
-    int getWeekday();
-    TimeWindow getDuration();
+    TimeWindow(int start_hour, int end_hour, string weekday, ll id);
+    int getStartingHour() const;
+    ll getId() const;
+    int getEndingHour() const;
+    int getWeekday() const;
+    TimeWindow getDuration() const;
     std::string toString();
+    //maybe move this implementation to the .cpp?
+    bool operator == (const TimeWindow other){
+        return (this->getId() == other.getId()); 
+    }; 
 };
 
+//maybe move this to the .cpp file later - it looks improper here as it is actual implementation
+//although since this is an "auxiliary definition" for this class maybe it should stay here
+struct TWComparator {
+    bool operator() (TimeWindow lhs, TimeWindow rhs) const {
+        return lhs.getId() < rhs.getId();
+    }
+};
 
 #endif

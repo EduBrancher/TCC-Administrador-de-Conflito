@@ -22,6 +22,4 @@ June 10th 2022:
 
 Adds TimeChart.cpp for class implementation. Implements methods setCourseAtWindow, getCoursesAtWindow,
 TimeChart constructor, getStudents and swapCourses. Uses the weekday modification introduced
-at TimeWindow. An important implication of the implementations is that if a course starts at
-14:00 and ends at 15:40, its starting hour is index 13 and ending hour is index 14. This is registered
-here to prevent confusion.
+at TimeWindow. Implements findConflicts.

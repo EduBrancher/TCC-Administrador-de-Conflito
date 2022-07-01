@@ -13,3 +13,9 @@ Getters: getName, getId, getTimes
 Constructor: Course(std::vector<TimeWindow> time_windows, std::string name, int id)
 
 Methods: addTimeWindow(TimeWindow time_window), removeTimeWindow(TimeWindow time_window)
+
+July 1st 2022:
+
+Adds TimeWindow comparator (TWComparator) to the set's template variables. Changes
+a Course's TimeWindow container to a set. (Courses may not have exactly the same window
+repeated as that would imply 2 simultaneous classes at the same weekday and hours).
