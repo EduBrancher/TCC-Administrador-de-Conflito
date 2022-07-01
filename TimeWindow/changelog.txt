@@ -21,3 +21,8 @@ method toString(): Transforms a TimeWindow into human-readable datetime content.
 Jun 10th 2022:
 Adds a map to pair weekdays with their index. Changes types of weekday related functions to deal
 with ints and strings.
+
+Jul 1st 2022:
+Adds an Id variable so we may uniquely identify and compare TimeWindows. Adds a comparator
+struct TWComparator so that the std::set library may compare TimeWindows in it's internal
+ordering and equality operations. Marks getters as const and adds an overload for equality.
