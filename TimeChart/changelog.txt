@@ -22,4 +22,7 @@ June 10th 2022:
 
 Adds TimeChart.cpp for class implementation. Implements methods setCourseAtWindow, getCoursesAtWindow,
 TimeChart constructor, getStudents and swapCourses. Uses the weekday modification introduced
-at TimeWindow. Implements findConflicts.
+at TimeWindow.
+
+July 1st 2022:
+Implements findConflicts.
