@@ -26,3 +26,12 @@ Jul 1st 2022:
 Adds an Id variable so we may uniquely identify and compare TimeWindows. Adds a comparator
 struct TWComparator so that the std::set library may compare TimeWindows in it's internal
 ordering and equality operations. Marks getters as const and adds an overload for equality.
+
+Jul 14th and 15th 2022:
+Implements Id generation on constructor using a static counter that counts instantiated members
+and implements deletor that decrements counter. Implements constructor, getters, and toString() 
+methods. Adds a new method, clashes(TimeWindow other) which determines if two windows overlap in
+time. Makes constructor and destructor public for pass-by-value purposes. Adds copy constructor
+to upkeep ID values correctly after pass-by-value in functions (the absence of this should 
+not cause problems because objects are instantiated first and then used, and no objects are 
+deleted until the program exits, but is still the correct practice).

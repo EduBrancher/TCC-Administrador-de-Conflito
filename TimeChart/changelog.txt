@@ -27,4 +27,7 @@ at TimeWindow.
 July 1st 2022:
 Implements findConflicts.
 
+July 15th 2022:
+Changes findConflicts to use TimeWindow::clashes function and simpler logic.
+
 

@@ -11,16 +11,17 @@
 class TimeChart {
 
 private:
-    std::set<Course> chart[7][24];
-    std::set<Student> students;
+    std::set<Course, CourseComparator> chart[7][24];
+    std::set<Student, StudentComparator> students;
 public:
-    TimeChart(std::set<Student> students);
+    TimeChart(std::set<Student, StudentComparator> students);
     void setCourseAtWindow(Course course, TimeWindow time_window);
-    std::set<Course> getCoursesAtWindow(TimeWindow time_window);
-    std::set<Student> getStudents();
+    void removeCourseAtWindow(Course course, TimeWindow time_window);
+    std::set<Course, CourseComparator> getCoursesAtWindow(TimeWindow time_window);
+    std::set<Student, StudentComparator> getStudents();
     void swapCourses(Course first_course, TimeWindow first_window, 
     Course second_course, TimeWindow second_window);
-    int findConflicts(std::set<Student> students, TimeWindow time_window);
+    int findConflicts(std::set<Student> students);
 };
 
 #endif

@@ -19,3 +19,7 @@ July 1st 2022:
 Adds TimeWindow comparator (TWComparator) to the set's template variables. Changes
 a Course's TimeWindow container to a set. (Courses may not have exactly the same window
 repeated as that would imply 2 simultaneous classes at the same weekday and hours).
+
+July 15th 2022:
+Implements class. Creates a comparator class for courses and adds it to all sets of courses.
+Adds a copy constructor and ID generator for comparison purposes, with a static object counter.

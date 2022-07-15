@@ -2,19 +2,19 @@
 
 using namespace std;
 
-set<Student> students;
+set<Student, StudentComparator> students;
 TimeChart timeChart(students);
 
-TimeChart::TimeChart(set<Student> students){
+TimeChart::TimeChart(set<Student, StudentComparator> students){
     this->students = students;
     for (int i = 0; i < 7; i++){
         for (int j = 0; j < 24; j++){
-            this->chart[i][j] = set<Course>();
+            this->chart[i][j] = set<Course, CourseComparator>();
         }
     }
 }
 
-set<Student> TimeChart::getStudents(){
+set<Student, StudentComparator> TimeChart::getStudents(){
     return this->students;
 }
 
@@ -27,8 +27,17 @@ void TimeChart::setCourseAtWindow(Course course, TimeWindow timeWindow){
     }
 }
 
-set<Course> TimeChart::getCoursesAtWindow(TimeWindow timeWindow){
-    set<Course> coursesAtWindow;
+void TimeChart::removeCourseAtWindow(Course course, TimeWindow timeWindow){
+    int weekday = timeWindow.getWeekday();
+    int startingHour = timeWindow.getStartingHour();
+    int endingHour = timeWindow.getEndingHour();
+    for (int i = startingHour; i <= endingHour; i++){
+        this->chart[weekday][i].erase(course);
+    }
+}
+
+set<Course, CourseComparator> TimeChart::getCoursesAtWindow(TimeWindow timeWindow){
+    set<Course, CourseComparator> coursesAtWindow;
     int weekday = timeWindow.getWeekday();
     int startingHour = timeWindow.getStartingHour();
     int endingHour = timeWindow.getEndingHour();
@@ -66,28 +75,29 @@ void TimeChart::swapCourses(Course firstCourse, TimeWindow firstWindow,
         
 
     }
-//for a given time window, check how many students have conflicts by being 
-//alumni of a pair of disciplines that are taught in that window.
-int TimeChart::findConflicts(std::set<Student> students, TimeWindow timeWindow){
+//Check how many conflicts there are by gathering all the time windows of a given student,
+//then checking how many of these time windows overlap. Repeat this for all students. 
+int TimeChart::findConflicts(std::set<Student> students){
     int conflicts = 0;
 
     for (auto student : students){
         std::set<TimeWindow, TWComparator> studentWindows;
-        std::set<Course> studentCourses = student.getCourses();
+        std::set<Course, CourseComparator> studentCourses = student.getCourses();
 
         for (auto course : studentCourses){
             std::set<TimeWindow, TWComparator> courseWindows = course.getTimes();
 
             for (auto window : courseWindows){
-                std::set<TimeWindow, TWComparator>::iterator it = studentWindows.find(window);
+                studentWindows.insert(window);
+            }
+        }
 
-                if (it != studentWindows.end()){ //TimeWindow is already present in the set
+        for (auto window : studentWindows){
+            for (auto window2 : studentWindows){
+                if (window.getId() == window2.getId()) continue;
+                if (window.clashes(window2)){
                     conflicts++;
-                    break;
                 }
-                else{
-                    studentWindows.insert(window); //add this window to set if not there
-                } 
             }
         }
     }

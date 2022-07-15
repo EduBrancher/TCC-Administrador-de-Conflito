@@ -6,18 +6,26 @@
 #include "../Course/Course.hpp"
 #include <set>
 
-
+struct StudentComparator{
+    bool operator()(Student a, Student b) const{
+        return a.getId() < b.getId();
+    }
+};
 
 class Student {
 
 private:
     ll id;
-    std::set<Course> desired_courses;
+    std::set<Course, CourseComparator> desired_courses;
+    ll generateId() const;
+    static size_t count;
 
 public:
-    Student(ll id, std::set<Course> desired_courses);
-    std::set<Course> getCourses();
-    int getId();
+    Student(std::set<Course, CourseComparator> desired_courses);
+    Student(const Student& other);
+    ~Student();
+    std::set<Course, CourseComparator> getCourses() const;
+    ll getId() const;
 };
 
 #endif

@@ -5,13 +5,7 @@
 #include <string>
 #include <map>
 #include <chrono>
-
-
-
-const std::map<std::string, int> Weekday{
-    {"Monday", 0}, {"Tuesday", 1}, {"Wednesday", 2}, {"Thursday", 3},
-    {"Friday", 4}, {"Saturday", 5}, {"Sunday", 6} 
-};
+#define ll long long
 
 class TimeWindow {
 
@@ -20,23 +14,26 @@ private:
     int end_hour;
     int week_day;
     ll id;
-    
+    ll generateId() const;
+    static ll count;
+
 public:
-    TimeWindow(int start_hour, int end_hour, string weekday, ll id);
+    TimeWindow(int start_hour, int end_hour, std::string weekday, ll id);
+    TimeWindow(const TimeWindow& other);
+    ~TimeWindow();
     int getStartingHour() const;
     ll getId() const;
     int getEndingHour() const;
     int getWeekday() const;
-    TimeWindow getDuration() const;
-    std::string toString();
+    int getDuration() const;
+    std::string toString() const;
+    bool clashes(TimeWindow other) const;
     //maybe move this implementation to the .cpp?
-    bool operator == (const TimeWindow other){
+    bool operator == (const TimeWindow other) const{
         return (this->getId() == other.getId()); 
     }; 
 };
 
-//maybe move this to the .cpp file later - it looks improper here as it is actual implementation
-//although since this is an "auxiliary definition" for this class maybe it should stay here
 struct TWComparator {
     bool operator() (TimeWindow lhs, TimeWindow rhs) const {
         return lhs.getId() < rhs.getId();
