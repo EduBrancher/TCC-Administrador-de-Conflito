@@ -1,5 +1,5 @@
 Jul 29th, 2022: Class implemented. Adds tests for ID generation functionality and clashing
-on TimeWindows. Defines compilation sequence for linter:
+on TimeWindows. Defines compilation sequence for linking:
 
 g++ -o TestSuite TestSuite.cpp ../TimeWindow/TimeWindow.cpp ../TimeChart/TimeChart.cpp ../Course/Course.cpp ../Student/Student.cpp
 
