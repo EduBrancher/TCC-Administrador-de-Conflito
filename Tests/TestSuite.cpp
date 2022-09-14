@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "../TimeWindow/TimeWindow.hpp"
 #include "../TimeChart/TimeChart.hpp"
+#include "../Terminal/Terminal.cpp"
 
 using namespace std;
 
@@ -535,6 +536,24 @@ void testPrintChart(){
     printChart.printChart();
 }
 
+Course* findCourseById(ll id, set<Course, CourseComparator> courses){
+    for (Course course : courses){
+        if (course.getId() == id){
+            return &course;
+        }
+    }
+    return NULL;
+}
+
+Student* findStudentById(ll id, set<Student, StudentComparator> students){
+    for (Student student : students){
+        if (student.getId() == id){
+            return &student;
+        }
+    }
+    return NULL;
+}
+
 int main(){
     vector<string> errors;
     string res;
@@ -572,5 +591,95 @@ int main(){
     cout << "Passing tests: " << passed << endl;
     cout << "Failing tests: " << failed << endl;
 
+    cout << "Starting interactive mode..." << endl;
+
+    set<Course, CourseComparator> courses;
+    set<Student, StudentComparator> students;
+    TimeChart timechart;
+
     
+
+    string input;
+    vector<string> splitInp;
+    while (true){
+        cout << ">>> ";
+        cin >> input;
+        input = lowerCase(input);
+        cout << endl;
+        splitInp = splitInput(input);
+        if (splitInp[0] == "exit" || splitInp[0] == "quit"){
+            cout << "Exiting program." << endl;
+            exit(0);
+        }
+        else if (splitInp[0] == "show"){
+            if (splitInp[1] == "courses"){
+                for (Course course : courses){
+                    cout << course.to_string();
+                }
+            }
+            else if (splitInp[1] == "students"){
+                for (Student student : students){
+                    cout << student.to_string();
+                }
+            }
+        }
+        else if (splitInp[0] == "add"){
+            if (splitInp[1] == "student"){
+                set<Course, CourseComparator> desired_courses;
+                for (int i = 2; i < splitInp.size(); i++){
+                    ll courseId = stol(splitInp[i]);
+                    Course* course = findCourseById(courseId, courses);
+                    if (course == NULL){
+                        cout << "Course ID not found, aborting add student" << endl;
+                    }
+                    else{
+                        desired_courses.insert(*course);
+                    }
+                }
+                students.insert(Student(desired_courses));
+            }
+            else if (splitInp[1] == "course"){
+
+            }
+        }
+        else if (splitInp[0] == "remove"){
+            if (splitInp[1] == "student"){
+
+            }
+            else if (splitInp[2] == "course"){
+
+            }
+        }
+        else if (splitInp[0] == "set"){
+            if (splitInp[1] == "student"){
+                //set course to student
+            }
+            else if (splitInp[1] == "course"){
+                //set time to course
+            }
+        }
+        else if (splitInp[0] == "remove"){
+            if (splitInp[1] == "student"){
+                //remove course from student
+            }
+            else if (splitInp[1] == "course"){
+                //remove time from course
+            }
+        }
+        else if (splitInp[0] == "swap"){
+            //swap courses between two given windows
+        }
+        else if (splitInp[0] == "conflicts"){
+            //find and display all conflicts
+        }
+        else if (splitInp[0] == "save"){
+            //persist current chart with a given name
+        }
+        else if (splitInp[0] == "load"){
+            //load a given chart by name
+        }
+        else if (splitInp[0] == "help"){
+            //display available commands and syntax
+        }
+    }
 }

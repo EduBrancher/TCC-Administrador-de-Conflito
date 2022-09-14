@@ -30,4 +30,7 @@ Implements findConflicts.
 July 15th 2022:
 Changes findConflicts to use TimeWindow::clashes function and simpler logic.
 
+Aug 5th 2022: Fixes findConflicts() to use the students set in the TimeChart object.
+
+Aug 31st 2022: Adds more methods for course insertion and printing methods for terminal mode.
 

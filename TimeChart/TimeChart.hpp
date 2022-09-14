@@ -15,13 +15,19 @@ private:
     std::set<Student, StudentComparator> students;
 public:
     TimeChart(std::set<Student, StudentComparator> students);
-    void setCourseAtWindow(Course course, TimeWindow time_window);
+    TimeChart();
+    void setCourseAtWindow(Course& course, TimeWindow time_window);
     void removeCourseAtWindow(Course course, TimeWindow time_window);
+    void addCourse(Course& course);
+    void removeCourse(Course course);
+    void addStudent(Student& student);
+    void removeStudent(Student student);
     std::set<Course, CourseComparator> getCoursesAtWindow(TimeWindow time_window);
     std::set<Student, StudentComparator> getStudents();
     void swapCourses(Course first_course, TimeWindow first_window, 
     Course second_course, TimeWindow second_window);
-    int findConflicts(std::set<Student> students);
+    int findConflicts();
+    void printChart();
 };
 
 #endif

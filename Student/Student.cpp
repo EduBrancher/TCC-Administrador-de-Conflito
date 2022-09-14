@@ -2,7 +2,7 @@
 
 #include "Student.hpp"
 
-ll static count = 0;
+ll Student::count = 0;
 
 ll Student::generateId() const{
     count++;
@@ -30,4 +30,14 @@ std::set<Course, CourseComparator>Student::getCourses() const{
 
 ll Student::getId() const{
     return this->id;
+}
+
+std::string Student::to_string() const{
+    std::string ans;
+    ans = "Student of id " + std::to_string(this->getId());
+    ans = ans + " with courses: \n";
+    for (Course course : this->desired_courses){
+        ans = ans + course.getName() + "\n";
+    }
+    return ans;
 }

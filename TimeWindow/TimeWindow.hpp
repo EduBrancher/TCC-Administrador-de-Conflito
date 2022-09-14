@@ -1,11 +1,14 @@
 
-#ifndef TIMEWINDOW_H
-#define TIMEWINDOW_H
+#ifndef TIMEWINDOW_HPP
+#define TIMEWINDOW_HPP
 
 #include <string>
 #include <map>
 #include <chrono>
 #define ll long long
+
+extern std::map< std::string, int > Weekday;
+extern std::map< int, std::string > invWeekday;
 
 class TimeWindow {
 
@@ -18,7 +21,7 @@ private:
     static ll count;
 
 public:
-    TimeWindow(int start_hour, int end_hour, std::string weekday, ll id);
+    TimeWindow(int start_hour, int end_hour, std::string weekday);
     TimeWindow(const TimeWindow& other);
     ~TimeWindow();
     int getStartingHour() const;
@@ -26,7 +29,7 @@ public:
     int getEndingHour() const;
     int getWeekday() const;
     int getDuration() const;
-    std::string toString() const;
+    std::string to_string() const;
     bool clashes(TimeWindow other) const;
     //maybe move this implementation to the .cpp?
     bool operator == (const TimeWindow other) const{

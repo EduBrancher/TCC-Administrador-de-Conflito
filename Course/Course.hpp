@@ -8,11 +8,7 @@
 #include <vector>
 #include <set>
 
-struct CourseComparator{
-    bool operator () (Course left, Course right){
-        return left.getId() < right.getId();
-    }
-};
+
 
 class Course {
 
@@ -32,8 +28,13 @@ public:
     ll getId();
     void addTimeWindow(TimeWindow time_window);
     void removeTimeWindow(TimeWindow time_window);
+    std::string to_string();
 };
 
-
+struct CourseComparator{
+    bool operator () (Course left, Course right){
+        return left.getId() < right.getId();
+    }
+};
 
 #endif

@@ -1,7 +1,7 @@
 
 #include "Course.hpp"
 
-static ll count = 0;
+ll Course::count = 0;
 
 Course::Course(std::set<TimeWindow, TWComparator> time_windows, std::string name){
     this->time_windows = time_windows;
@@ -43,4 +43,13 @@ void Course::addTimeWindow(TimeWindow timeWindow){
 
 void Course::removeTimeWindow(TimeWindow timeWindow){
     this->time_windows.erase(timeWindow);
+}
+
+std::string Course::to_string(){
+    std::string ans;
+    ans = ans + "Course " + this->name + " with time windows:\n ";
+    for (TimeWindow window : this->time_windows){
+        ans = ans + window.to_string(); + "\n";
+    }
+    return ans;
 }

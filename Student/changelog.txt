@@ -12,6 +12,8 @@ Getters: getCourses, getId
 Constructor: Student(ll id, std::set<Course> desired_courses)
 
 July 15th 2022:
-
 Implements class. Adds copy constructor and ID generator to maintain ID values.
 Changes student to have a comparator object.
+
+Aug 5th 2022:
+Adds to_string() method

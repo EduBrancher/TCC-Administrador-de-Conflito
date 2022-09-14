@@ -16,11 +16,13 @@ std::map< int, std::string > invWeekday{
     {4, "friday"}, {5, "saturday"}, {6, "sunday"} 
 };
 
-TimeWindow::TimeWindow(int start_hour, int end_hour, std::string weekday, ll id){
+
+
+TimeWindow::TimeWindow(int start_hour, int end_hour, std::string weekday){
     this->start_hour = start_hour;
     this->end_hour = end_hour;
     std::transform(weekday.begin(), weekday.end(), weekday.begin(), ::tolower);
-    int week_day = Weekday["sunday"];
+    int week_day = Weekday[weekday];
     this->week_day = week_day;
     this->id = this->generateId();
 }
@@ -32,9 +34,9 @@ TimeWindow::TimeWindow(const TimeWindow& other){
     this->id = other.id;
     //this is only required because of the count!
     //what would happen without this: whenever we pass an object by value,
-    //it would be deleted at the end of it's lifecycle. Then, our destructor
+    //it would be deleted at the end of its lifecycle. Then, our destructor
     //will decrement count. This would generate a mistake when assigning an ID
-    //to a new object, as the count is suddenly lower owing to the deletion of
+    //to a new object, as the count is now lower owing to the deletion of
     //the copy. Therefore, we have to increment count when passing by value.
     //Since pass by value calls the copy constructor, we have to generate one
     //by hand, as the compiler-generated copy constructor will not increment count.
@@ -57,11 +59,17 @@ int TimeWindow::getStartingHour() const{
 int TimeWindow::getEndingHour() const{
     return this->end_hour;
 }
+
 int TimeWindow::getWeekday() const{
     return this->week_day;
 }
+
 int TimeWindow::getDuration() const{
     return this->end_hour - this->start_hour;
+}
+
+ll TimeWindow::getId() const{
+    return this->id;
 }
 
 bool TimeWindow::clashes(TimeWindow other) const{
@@ -75,7 +83,7 @@ bool TimeWindow::clashes(TimeWindow other) const{
     return true;
 }
 
-std::string TimeWindow::toString() const{
+std::string TimeWindow::to_string() const{
     std::string ans;
     ans = "TimeWindow of id " + std::to_string(this->getId());
     ans = ans + " starts at " + std::to_string(this->getStartingHour());

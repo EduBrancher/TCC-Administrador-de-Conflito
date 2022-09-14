@@ -1,0 +1,4 @@
+Aug 31st 2022:
+Terminal.cpp added. Terminal is a library to provide interaction functions via a 
+terminal prompt that allows a user to call other functions. Terminal is not an object.
+
