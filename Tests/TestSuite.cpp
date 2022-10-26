@@ -536,7 +536,7 @@ void testPrintChart(){
     printChart.printChart();
 }
 
-Course* findCourseById(ll id, set<Course, CourseComparator> courses){
+Course* findCourseById(ll id, const set<Course, CourseComparator>& const courses){
     for (Course course : courses){
         if (course.getId() == id){
             return &course;
@@ -545,7 +545,16 @@ Course* findCourseById(ll id, set<Course, CourseComparator> courses){
     return NULL;
 }
 
-Student* findStudentById(ll id, set<Student, StudentComparator> students){
+Course* findCourseByName(string name, const set<Course, CourseComparator>& const courses){
+    for (Course course : courses){
+        if (course.getName() == name){
+            return &course;
+        }
+    }
+    return NULL;
+}
+
+Student* findStudentById(ll id, const set<Student, StudentComparator>& const students){
     for (Student student : students){
         if (student.getId() == id){
             return &student;
@@ -553,6 +562,47 @@ Student* findStudentById(ll id, set<Student, StudentComparator> students){
     }
     return NULL;
 }
+
+Student* findStudentbyNUSP(ll NUSP, const set<Student, StudentComparator>& const students){
+    for (Student student : students){
+        if (student.getNUSP() == NUSP){
+            return &student;
+        }
+    }
+    return NULL;
+}
+
+Student* findStudent(string studentIdentifier, const set<Student, StudentComparator>& const students){
+    Student* student;
+    ll NUSP = stol(studentIdentifier);
+
+    student = findStudentbyNUSP(NUSP, students);
+    if (student != NULL){
+        return student;
+    }
+    student = findStudentById(NUSP, students);
+    if (student != NULL){
+        return student;
+    }
+    cout << "Student not found with supplied identifier " << studentIdentifier << "." << endl;
+    return NULL;
+}
+
+Course* findCourse(string courseIdentifier, const set<Course, CourseComparator>& const courses){
+    Course* course;
+    course = findCourseByName(courseIdentifier, courses);
+    if (course != NULL){
+        return course;
+    }
+    ll Id = stol(courseIdentifier);
+    course = findCourseById(Id, courses);
+    if (course != NULL){
+        return course;
+    }
+    cout << "Course not found with supplied identifier " << courseIdentifier << "." << endl;
+    return NULL;
+}
+
 
 int main(){
     vector<string> errors;
@@ -593,8 +643,8 @@ int main(){
 
     cout << "Starting interactive mode..." << endl;
 
-    set<Course, CourseComparator> courses;
-    set<Student, StudentComparator> students;
+    set<Course, CourseComparator> registeredCourses;
+    set<Student, StudentComparator> registeredStudents;
     TimeChart timechart;
 
     
@@ -613,49 +663,194 @@ int main(){
         }
         else if (splitInp[0] == "show"){
             if (splitInp[1] == "courses"){
-                for (Course course : courses){
+                for (Course course : registeredCourses){
                     cout << course.to_string();
                 }
             }
             else if (splitInp[1] == "students"){
-                for (Student student : students){
+                for (Student student : registeredStudents){
                     cout << student.to_string();
                 }
             }
         }
         else if (splitInp[0] == "add"){
-            if (splitInp[1] == "student"){
+            if (splitInp.size() < 2){
+                cout << "Wrong number of arguments for add operation." << endl;
+            }
+            else if (splitInp[1] == "student"){
                 set<Course, CourseComparator> desired_courses;
                 for (int i = 2; i < splitInp.size(); i++){
-                    ll courseId = stol(splitInp[i]);
-                    Course* course = findCourseById(courseId, courses);
+                    string courseName = splitInp[i];
+                    Course* course = findCourseByName(courseName, registeredCourses);
                     if (course == NULL){
-                        cout << "Course ID not found, aborting add student" << endl;
+                        cout << "Course not found, aborting add student" << endl;
                     }
                     else{
                         desired_courses.insert(*course);
                     }
                 }
-                students.insert(Student(desired_courses));
+                registeredStudents.insert(Student(desired_courses));
             }
             else if (splitInp[1] == "course"){
+                if (splitInp.size() < 3){
+                    cout << "Wrong number of arguments for add course operation, expected at least 3. type help for details." << endl;
+                }
+                else{
+                    string courseName = splitInp[2];
+                    set<TimeWindow, TWComparator> timeWindows;
+                    int i = 3;
+                    while (i < splitInp.size()){
+                        string weekDay = splitInp[i];
+                        int start_time;
+                        int end_time;
+                        int window_OK = 0;
+                        i++;
+                        if (Weekday.count(weekDay)){
+                            if (i >= splitInp.size() || i + 1 >= splitInp.size()){
+                                cout << "Missing timewindow for " << weekDay << " class. Aborting. Use help for details." << endl; 
+                            }
+                            else{
+                                start_time = stol(splitInp[i]);
+                                i++;
+                                end_time = stol(splitInp[i]);
+                                window_OK = 1;
+                            }
+                            i++;
+                        }
+                        else{
+                            cout << "day of week mistyped, aborting. Use help for details." << endl;
+                        }
 
+                        if (window_OK){
+                            TimeWindow timeWindow = TimeWindow(start_time, end_time, weekDay);
+                            timeWindows.insert(timeWindow);
+                        }
+                    }
+                    registeredCourses.insert(Course(timeWindows, courseName));
+                }
             }
         }
-        else if (splitInp[0] == "remove"){
+        else if (splitInp[0] == "unregister"){
             if (splitInp[1] == "student"){
-
+                //remove student from registeredStudents
+                Student* student = NULL;
+                if (splitInp.size() < 3){
+                    cout << "Incorrect number of arguments for unregister students, NUSP or ID missing. Use help for details." << endl;
+                }
+                string studentIdentifier = splitInp[2];
+                student = findStudent(studentIdentifier, registeredStudents);
+                if (student != NULL){
+                    registeredStudents.erase(*student);
+                }
             }
-            else if (splitInp[2] == "course"){
-
+            else if (splitInp[1] == "course"){
+                int course_found = 0;
+                Course* course;
+                if (splitInp.size() < 3){
+                    cout << "Incorrect number of arguments for unregister course, course name or id missing." << endl;
+                }
+                else{
+                    string name = splitInp[2];
+                    course = findCourseByName(name, registeredCourses);
+                    if (course == NULL){
+                        int id = stol(splitInp[2]);
+                        course = findCourseById(id, registeredCourses);
+                        if (course == NULL){
+                            cout << "Course not found, wrong name or id given." << endl;
+                        }
+                        else{
+                            course_found = 1;
+                        }
+                    }
+                    else{
+                        course_found = 1;
+                    }
+                }
+                if (course_found){
+                    registeredCourses.erase(*course);
+                    for (Student student : registeredStudents){
+                        student.getCourses().erase(*course);
+                    }
+                }
             }
         }
         else if (splitInp[0] == "set"){
             if (splitInp[1] == "student"){
                 //set course to student
+                int studentFound = 0;
+                int courseFound = 0;
+                Student* student;
+                Course* course;
+                if (splitInp.size() < 4){
+                    cout << "Wrong number of arguments for set student, missing student identifier and course identifier" << endl;
+                }
+                else{
+                    int studentIdentifier = stol(splitInp[3]);
+                    string courseName = splitInp[4];
+                    student = findStudentbyNUSP(studentIdentifier, registeredStudents);
+                    if (student == NULL){
+                        student = findStudentById(studentIdentifier, registeredStudents);
+                        if (student == NULL){
+                            cout << "Student could not be found with provided identifier." << endl;
+                        }
+                        else{
+                            studentFound = 1;
+                        }
+                    }
+                    else{
+                        studentFound = 1;
+                    }
+                    course = findCourseByName(courseName, registeredCourses);
+                    if (course == NULL){
+                        course = findCourseById(stol(courseName), registeredCourses);
+                        if (course == NULL){
+                            cout << "Course could not be found with provided identifier." << endl;
+                        }
+                        else{
+                            courseFound = 1;
+                        }
+                    }
+                    else{
+                        courseFound = 1;
+                    }
+                }
+                if(studentFound && courseFound){
+                    student->getCourses().insert(*course);
+                }
             }
             else if (splitInp[1] == "course"){
                 //set time to course
+                int courseFound = 0;
+                Course* course;
+                int startingTime;
+                int endingTime;
+                string weekday;
+                if (splitInp.size() < 6){
+                    cout << "Wrong number of arguments for setting timewindow to course." << endl;
+                }
+                else{
+                    string courseIdentifier = splitInp[2];
+                    weekday = splitInp[3];
+                    startingTime = stol(splitInp[4]);
+                    endingTime = stol(splitInp[5]);
+                    course = findCourseByName(courseIdentifier, registeredCourses);
+                    if (course == NULL){
+                        course = findCourseById(stol(courseIdentifier), registeredCourses);
+                        if (course == NULL){
+                            cout << "Could not find course with provided identifier " << courseIdentifier << "." << endl; 
+                        }
+                        else{
+                            courseFound = 1;
+                        }
+                    }
+                    else{
+                        courseFound = 1;
+                    }
+                }
+                if (courseFound){
+                    TimeWindow tw = TimeWindow(startingTime, endingTime, weekday);
+                    course->addTimeWindow(tw);
+                }
             }
         }
         else if (splitInp[0] == "remove"){
@@ -667,7 +862,7 @@ int main(){
             }
         }
         else if (splitInp[0] == "swap"){
-            //swap courses between two given windows
+            //swap two windows between courses
         }
         else if (splitInp[0] == "conflicts"){
             //find and display all conflicts
@@ -677,6 +872,9 @@ int main(){
         }
         else if (splitInp[0] == "load"){
             //load a given chart by name
+        }
+        else if (splitInp[0] == "update"){
+            //update chart with new courses and students.
         }
         else if (splitInp[0] == "help"){
             //display available commands and syntax

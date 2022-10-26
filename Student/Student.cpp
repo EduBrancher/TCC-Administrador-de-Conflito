@@ -12,6 +12,13 @@ ll Student::generateId() const{
 Student::Student(std::set<Course, CourseComparator> desired_courses){
     this->desired_courses = desired_courses;
     this->id = generateId();
+    this->NUSP = -1;
+}
+
+Student::Student(std::set<Course, CourseComparator> desired_courses, ll NUSP){
+    this->NUSP = NUSP;
+    this->desired_courses = desired_courses;
+    this->id = generateId();
 }
 
 Student::Student(const Student& other){
@@ -30,6 +37,10 @@ std::set<Course, CourseComparator>Student::getCourses() const{
 
 ll Student::getId() const{
     return this->id;
+}
+
+ll Student::getNUSP() const{
+    return this->NUSP;
 }
 
 std::string Student::to_string() const{
