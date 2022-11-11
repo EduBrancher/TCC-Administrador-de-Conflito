@@ -746,27 +746,15 @@ int main(){
             else if (splitInp[1] == "course"){
                 int course_found = 0;
                 Course* course;
+                string courseIdentifier;
+
                 if (splitInp.size() < 3){
                     cout << "Incorrect number of arguments for unregister course, course name or id missing." << endl;
                 }
-                else{
-                    string name = splitInp[2];
-                    course = findCourseByName(name, registeredCourses);
-                    if (course == NULL){
-                        int id = stol(splitInp[2]);
-                        course = findCourseById(id, registeredCourses);
-                        if (course == NULL){
-                            cout << "Course not found, wrong name or id given." << endl;
-                        }
-                        else{
-                            course_found = 1;
-                        }
-                    }
-                    else{
-                        course_found = 1;
-                    }
-                }
-                if (course_found){
+
+                courseIdentifier = splitInp[2];
+                course = findCourse(courseIdentifier, registeredCourses);
+                if (course != NULL){
                     registeredCourses.erase(*course);
                     for (Student student : registeredStudents){
                         student.getCourses().erase(*course);
@@ -779,42 +767,26 @@ int main(){
                 //set course to student
                 int studentFound = 0;
                 int courseFound = 0;
+                string studentIdentifier;
+                string courseIdentifier;
                 Student* student;
                 Course* course;
                 if (splitInp.size() < 4){
                     cout << "Wrong number of arguments for set student, missing student identifier and course identifier" << endl;
                 }
                 else{
-                    int studentIdentifier = stol(splitInp[3]);
-                    string courseName = splitInp[4];
-                    student = findStudentbyNUSP(studentIdentifier, registeredStudents);
+                    studentIdentifier = splitInp[3];
+                    courseIdentifier = splitInp[4];
+                    student = findStudent(studentIdentifier, registeredStudents);
                     if (student == NULL){
-                        student = findStudentById(studentIdentifier, registeredStudents);
-                        if (student == NULL){
-                            cout << "Student could not be found with provided identifier." << endl;
-                        }
-                        else{
-                            studentFound = 1;
-                        }
+                        cout << "Student could not be found with provided identifier." << endl;
                     }
-                    else{
-                        studentFound = 1;
-                    }
-                    course = findCourseByName(courseName, registeredCourses);
+                    course = findCourse(courseIdentifier, registeredCourses);
                     if (course == NULL){
-                        course = findCourseById(stol(courseName), registeredCourses);
-                        if (course == NULL){
-                            cout << "Course could not be found with provided identifier." << endl;
-                        }
-                        else{
-                            courseFound = 1;
-                        }
-                    }
-                    else{
-                        courseFound = 1;
+                        cout << "Course could not be found with provided identifier." << endl;
                     }
                 }
-                if(studentFound && courseFound){
+                if(studentFound != NULL && courseFound != NULL){
                     student->getCourses().insert(*course);
                 }
             }
@@ -825,29 +797,20 @@ int main(){
                 int startingTime;
                 int endingTime;
                 string weekday;
+                string courseIdentifier;
                 if (splitInp.size() < 6){
                     cout << "Wrong number of arguments for setting timewindow to course." << endl;
                 }
                 else{
-                    string courseIdentifier = splitInp[2];
+                    courseIdentifier = splitInp[2];
                     weekday = splitInp[3];
                     startingTime = stol(splitInp[4]);
                     endingTime = stol(splitInp[5]);
-                    course = findCourseByName(courseIdentifier, registeredCourses);
+                    course = findCourse(courseIdentifier, registeredCourses);
                     if (course == NULL){
-                        course = findCourseById(stol(courseIdentifier), registeredCourses);
-                        if (course == NULL){
-                            cout << "Could not find course with provided identifier " << courseIdentifier << "." << endl; 
-                        }
-                        else{
-                            courseFound = 1;
-                        }
+                        cout << "Could not find course with provided identifier " << courseIdentifier << "." << endl;
                     }
-                    else{
-                        courseFound = 1;
-                    }
-                }
-                if (courseFound){
+                if (course != NULL){
                     TimeWindow tw = TimeWindow(startingTime, endingTime, weekday);
                     course->addTimeWindow(tw);
                 }
