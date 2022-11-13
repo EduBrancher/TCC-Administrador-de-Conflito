@@ -39,7 +39,17 @@ public:
 
 struct TWComparator {
     bool operator() (TimeWindow lhs, TimeWindow rhs) const {
-        return lhs.getId() < rhs.getId();
+        if (lhs.getWeekday() == rhs.getWeekday()){
+            if (lhs.getStartingHour() == rhs.getStartingHour()){
+                return (lhs.getEndingHour() < rhs.getEndingHour());
+            }
+            else{
+                return lhs.getStartingHour() < rhs.getStartingHour();
+            }
+        }
+        else{
+            return (lhs.getWeekday() < rhs.getWeekday());
+        }
     }
 };
 
