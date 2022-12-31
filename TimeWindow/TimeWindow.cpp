@@ -2,6 +2,7 @@
 #include <map>
 #include <chrono>
 #include <algorithm>
+#include <iostream>
 #include "TimeWindow.hpp"
 
 ll TimeWindow::count = 0;
@@ -16,7 +17,9 @@ std::map< int, std::string > invWeekday{
     {4, "friday"}, {5, "saturday"}, {6, "sunday"} 
 };
 
-
+TimeWindow::TimeWindow(){
+    
+}
 
 TimeWindow::TimeWindow(int start_hour, int end_hour, std::string weekday){
     this->start_hour = start_hour;
@@ -73,6 +76,7 @@ ll TimeWindow::getId() const{
 }
 
 bool TimeWindow::clashes(TimeWindow other) const{
+    
     if (this->getWeekday() != other.getWeekday()){
         return false;
     }
@@ -80,7 +84,14 @@ bool TimeWindow::clashes(TimeWindow other) const{
         this->getStartingHour() >= other.getEndingHour()){
         return false;
     }
+    std::cout << "found clash between " << this->to_string() << " and " << other.to_string() << std::endl;
     return true;
+}
+
+bool TimeWindow::equalTo(TimeWindow other) const {
+    return (this->getWeekday() == other.getWeekday() &&
+            this->getStartingHour() == other.getStartingHour() &&
+            this->getEndingHour() == other.getEndingHour());
 }
 
 std::string TimeWindow::to_string() const{

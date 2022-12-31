@@ -2,6 +2,7 @@
 
 #include "Student.hpp"
 
+
 ll Student::count = 0;
 
 ll Student::generateId() const{
@@ -24,6 +25,7 @@ Student::Student(std::set<Course, CourseComparator> desired_courses, ll NUSP){
 Student::Student(const Student& other){
     this->desired_courses = other.desired_courses;
     this->id = other.id;
+    this->NUSP = other.NUSP;
     count++;
 }
 
@@ -43,9 +45,11 @@ ll Student::getNUSP() const{
     return this->NUSP;
 }
 
+
 std::string Student::to_string() const{
+
     std::string ans;
-    ans = "Student of id " + std::to_string(this->getId());
+    ans = "Student " + std::to_string(this->NUSP);
     ans = ans + " with courses: \n";
     for (Course course : this->desired_courses){
         ans = ans + course.getName() + "\n";

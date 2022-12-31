@@ -1,5 +1,12 @@
 Jul 29th, 2022: Class implemented. Adds tests for ID generation functionality and clashing
 on TimeWindows. Defines compilation sequence for linking:
 
-g++ -o TestSuite TestSuite.cpp ../TimeWindow/TimeWindow.cpp ../TimeChart/TimeChart.cpp ../Course/Course.cpp ../Student/Student.cpp ../Terminal/Terminal.cpp
+ g++ -std=c++17 -o TestSuite TestSuite.cpp ../TimeWindow/TimeWindow.cpp ../TimeChart/TimeChart.cpp ../Course/Course.cpp ../Student/Student.cpp
+Nov 23rd, 2022: Some commands implemented on interaction code. Testing commands:
 
+exit command works
+help command works
+add course command works
+add student command works
+remove course command works
+remove student command works

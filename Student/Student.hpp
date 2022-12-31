@@ -29,7 +29,7 @@ public:
 };
 
 struct StudentComparator{
-    bool operator()(Student a, Student b) const{
+    bool operator()(const Student a, const Student b) const{
         return a.getId() < b.getId();
     }
 };

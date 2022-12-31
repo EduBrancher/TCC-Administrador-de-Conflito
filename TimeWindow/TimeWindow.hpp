@@ -23,6 +23,7 @@ private:
 public:
     TimeWindow(int start_hour, int end_hour, std::string weekday);
     TimeWindow(const TimeWindow& other);
+    TimeWindow();
     ~TimeWindow();
     int getStartingHour() const;
     ll getId() const;
@@ -31,6 +32,7 @@ public:
     int getDuration() const;
     std::string to_string() const;
     bool clashes(TimeWindow other) const;
+    bool equalTo(TimeWindow other) const;
     //maybe move this implementation to the .cpp?
     bool operator == (const TimeWindow other) const{
         return (this->getId() == other.getId()); 
@@ -38,7 +40,13 @@ public:
 };
 
 struct TWComparator {
-    bool operator() (TimeWindow lhs, TimeWindow rhs) const {
+    bool operator() (const TimeWindow lhs, const TimeWindow rhs) const {
+        return lhs.getId() != rhs.getId();
+    } 
+};
+
+struct TWComparator2 {
+    bool operator() (const TimeWindow lhs, const TimeWindow rhs) const {
         if (lhs.getWeekday() == rhs.getWeekday()){
             if (lhs.getStartingHour() == rhs.getStartingHour()){
                 return (lhs.getEndingHour() < rhs.getEndingHour());
@@ -47,9 +55,7 @@ struct TWComparator {
                 return lhs.getStartingHour() < rhs.getStartingHour();
             }
         }
-        else{
-            return (lhs.getWeekday() < rhs.getWeekday());
-        }
+        return (lhs.getWeekday() < rhs.getWeekday());
     }
 };
 

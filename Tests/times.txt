@@ -1,0 +1,30 @@
+MAE0312 wednesday 8 10 friday 10 12
+MAC0105 wednesday 14 16 friday 8 10
+MAC0345 wednesday 14 16 friday 10 12
+MAC0218 monday 14 16 wednesday 16 18
+MAC0439 tuesday 10 12 friday 8 10
+MAC0320 tuesday 14 16 thursday 16 18
+MAC0417 tuesday 16 18 thursday 14 16
+MAC0336 tuesday 16 18 thursday 14 16
+MAT0223 tuesday 16 18 thursday 14 16
+MAC0420 wednesday 8 10 friday 10 12
+MAC0467 monday 14 16 monday 16 18
+MAC0436 monday 16 18 wednesday 16 18
+MAC0427 monday 16 18 thursday 14 16
+MAC0323 tuesday 10 12 thursday 8 10
+MAC0350 tuesday 10 12 thursday 8 10
+MAC0425 tuesday 10 12 thursday 8 10
+MAC0110 monday 8 10 wednesday 10 12
+MAC0219 monday 8 10 wednesday 10 12
+MAT0264 monday 8 10 wednesday 10 12
+MAE0228 monday 8 10 wednesday 10 12
+MAC0691 monday 8 10 thursday 10 12
+MAC0329 tuesday 8 10 thursday 10 12
+MAC0210 tuesday 8 10 thursday 10 12
+MAC0460 tuesday 8 10 thursday 10 12
+MAC0422 monday 10 12 wednesday 8 10
+MAT0206 monday 10 12 wednesday 8 10
+MAC0473 monday 10 12 thursday 8 10
+MAC0209 monday 14 16 monday 16 18
+MAC0102 wednesday 13 14
+MAC0499 saturday 10 16

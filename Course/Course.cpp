@@ -25,7 +25,7 @@ ll Course::generateId(){
     return count;
 }
 
-ll Course::getId(){
+ll Course::getId() const{
     return this->id;
 }
 
@@ -33,7 +33,7 @@ std::set<TimeWindow, TWComparator> Course::getTimes(){
     return this->time_windows;
 }
 
-std::string Course::getName(){
+std::string Course::getName() const{
     return this->name;
 }
 
@@ -47,7 +47,7 @@ void Course::removeTimeWindow(TimeWindow timeWindow){
 
 std::string Course::to_string(){
     std::string ans;
-    ans = ans + "Course " + this->name + " with time windows:\n ";
+    ans = ans + "Course " + this->name + " with time windows:\n";
     for (TimeWindow window : this->time_windows){
         ans = ans + window.to_string(); + "\n";
     }

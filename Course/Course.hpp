@@ -23,16 +23,16 @@ public:
     Course(const Course& other);
     ~Course();
     std::set<TimeWindow, TWComparator> getTimes();
-    std::string getName();
+    std::string getName() const;
     ll generateId();
-    ll getId();
+    ll getId() const;
     void addTimeWindow(TimeWindow time_window);
     void removeTimeWindow(TimeWindow time_window);
     std::string to_string();
 };
 
 struct CourseComparator{
-    bool operator () (Course left, Course right){
+    bool operator () (const Course left, const Course right) const{
         return left.getId() < right.getId();
     }
 };

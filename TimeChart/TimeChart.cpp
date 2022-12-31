@@ -115,17 +115,17 @@ int TimeChart::findConflicts(){
 
         for (auto course : studentCourses){
             std::set<TimeWindow, TWComparator> courseWindows = course.getTimes();
-
             for (auto window : courseWindows){
                 studentWindows.insert(window);
             }
         }
 
+
         for (std::set<TimeWindow, TWComparator>::iterator it = studentWindows.begin(); 
              it != studentWindows.end(); ++it){
             for (std::set<TimeWindow, TWComparator>::iterator it2 = std::next(it);
                  it2 != studentWindows.end(); ++it2){
-                //if ((*it).getId() == (*it2).getId()) continue;
+                if ((*it).getId() == (*it2).getId()) continue;
                 if ((*it).clashes((*it2))){
                     conflicts++;
                 }
